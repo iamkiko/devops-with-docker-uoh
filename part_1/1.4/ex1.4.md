@@ -1,53 +1,9 @@
-# Exercises for Part 1
-
-Source material: [Part 1](https://devopswithdocker.com/part-1)
-## 1.1
-
-```
-$ docker ps -a                                                                                                                                                           ✔  system 
-CONTAINER ID
-IMAGE     COMMAND                  CREATED              STATUS                      PORTS     NAMES
-32363cc9d6e4   nginx     "/docker-entrypoint.…"   About a minute ago   Exited (0) 19 seconds ago             boring_payne
-1a4315e6bf9c   nginx     "/docker-entrypoint.…"   About a minute ago   Exited (0) 6 seconds ago              quirky_ptolemy
-```
-## 1.2
-```
-$ docker rm boring_payne                                                                                                                                                 ✔  system 
-boring_payne
- $ docker rm quirky_ptolemy                                                                                                                                               ✔  system 
-quirky_ptolemy
- $ docker rm hardcore_sanderson                                                                                                                                           ✔  system 
-Error response from daemon: You cannot remove a running container 8c9dce3d219b4d9e9d957221786488825b469eb634cd971764e7fbb0eeadb51e. Stop the container before attempting removal or force remove
- $ docker stop hardcore_sanderson                                                                                                                                       1 ✘  system 
-hardcore_sanderson
- $ docker rm hardcore_sanderson                                                                                                                                           ✔  system 
-hardcore_sanderson
-```
-
-## 1.3
-
-Secret message:
-```Secret message is: 'You can find the source code here: https://github.com/docker-hy'
-2022-12-16 14:44:00 +0000 UTC
-2022-12-16 14:44:02 +0000 UTC
-2022-12-16 14:44:04 +0000 UTC
-2022-12-16 14:44:06 +0000 UTC
-2022-12-16 14:44:08 +0000 UTC
-```
-Commands:
-```
- $ docker run devopsdockeruh/simple-web-service:ubuntu
- $ docker ps -a
- $ docker attach --no-stdin beautiful_cerf
-
- $ docker exec -it beautiful_cerf bash
-```
-
 ## 1.4
 ```
 $ docker run -d -it --name dme1 ubuntu sh -c 'echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website\;'
 3f7ebd68c76fe447620fee12d0c2a6087476946617057292d22b001bcc87c71c
-$ docker exec -it dme1 bash                                     ✔  system 
+
+$ docker exec -it dme1 bash                                    
 root@3f7ebd68c76f:/# apt-get update
 Get:1 http://ports.ubuntu.com/ubuntu-ports jammy InRelease [270 kB]
 Get:2 http://ports.ubuntu.com/ubuntu-ports jammy-updates InRelease [114 kB]
@@ -188,43 +144,3 @@ root@3f7ebd68c76f:/# curl helsinki.fi
 <p>The document has moved <a href="https://www.helsinki.fi/">here</a>.</p>
 </body></html>
 root@3f7ebd68c76f:/#
-```
-## 1.5/1.6
-
-```
-$  docker run -it devopsdockeruh/pull_exercise                                                    INT ✘  2m 13s  system 
-Unable to find image 'devopsdockeruh/pull_exercise:latest' locally
-latest: Pulling from devopsdockeruh/pull_exercise
-8e402f1a9c57: Pull complete
-5e2195587d10: Pull complete
-6f595b2fc66d: Pull complete
-165f32bf4e94: Pull complete
-67c4f504c224: Pull complete
-Digest: sha256:7c0635934049afb9ca0481fb6a58b16100f990a0d62c8665b9cfb5c9ada8a99f
-Status: Downloaded newer image for devopsdockeruh/pull_exercise:latest
-WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
-Give me the password: b_____
-You found the correct password. Secret message is:
-"This is the secret message"
-
-```
-
-## 1.7
-Dockerfile contents:
-```
-# Use ubuntu:20.04 as the base image
-FROM ubuntu:20.04
-
-# Install curl
-RUN apt-get update && apt-get install -y curl
-
-# Copy the instructions.sh file from this location to /usr/src/app/ creating /usr/src/app/instructions.sh
-COPY instructions.sh .
-
-# Alternatively, if we skipped chmod earlier, we can add execution permissions during the build.
-# RUN chmod +x hello.sh
-
-# When running docker run the command will be ./hello.sh
-CMD ./instructions.sh
-
-```
